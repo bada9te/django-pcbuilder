@@ -1,0 +1,9 @@
+<header>
+    <h1>PcBuild</h1>
+    
+    {% if request.user.is_authenticated %}
+        <a class="sign-in-button" href="{% url 'logout' %}">{{ request.user }}</a>
+    {% else %}
+        <a class="sign-in-button" href="{% url 'sign-in' %}">Sign in</a>
+    {% endif %}
+</header>

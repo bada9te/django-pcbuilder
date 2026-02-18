@@ -1,0 +1,28 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load socialaccount %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'builder/styles.css' %}">
+{% endblock head %}
+
+{% block content %}
+    <form method="post" action="" class="input-form">
+        {% csrf_token %}
+        {% if page == "login" %}
+            <h2>Login</h2>
+            {{ form.as_p }}
+            <button type="submit">Login</button>
+            <a class="use-google" href="{% provider_login_url 'google' %}">Sign in with Google</a>
+
+            <p>Don't have an account? <a href="{% url 'sign-up' %}">Create new</a>.</p>
+        {% elif page == "register" %}
+            <h2>Register</h2>
+            {{ form.as_p }}
+            <button type="submit">Register</button>
+            <a class="use-google" href="{% provider_login_url 'google' %}">Sign up with Google</a>
+            
+            <p>Already have an account? <a href="{% url 'sign-in' %}">Sign in</a>.</p>
+        {% endif %}
+    </form>
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'builder/styles.css' %}">
+{% endblock head %}
+
+{% block content %}
+    <p>Here you can set up your PC build by selecting components and configuring settings.</p>
+
+    <form action="" method="post" class="builder-form">
+        {% csrf_token %}
+
+        <h2>Build Configuration</h2>
+
+        {{ form.as_p }}
+
+        <hr>
+        <button type="submit">Save Build</button>
+    </form>
+{% endblock content %}

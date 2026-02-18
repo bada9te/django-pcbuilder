@@ -40,6 +40,13 @@ INSTALLED_APPS = [
 
     # custom apps
     'builder.apps.BuilderConfig',
+
+    # allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.usersessions',
 ]
 
 MIDDLEWARE = [
@@ -50,7 +57,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # Add the allauth account middleware:
+    "allauth.account.middleware.AccountMiddleware",
 ]
+
 
 ROOT_URLCONF = 'main.urls'
 
@@ -66,10 +77,14 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                # `allauth` needs this from django
+                'django.template.context_processors.request',
             ],
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'main.wsgi.application'
 
@@ -119,7 +134,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+# URL prefix for static files
+STATIC_URL = '/static/'
+
+# Additional locations the staticfiles app will search
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
+# Directory where `collectstatic` will collect static files for production
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -128,3 +152,55 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Overriden auth user model
 AUTH_USER_MODEL = 'builder.User'
+
+
+
+
+
+
+
+
+
+ACCOUNT_FORMS = {
+    'add_email': 'allauth.account.forms.AddEmailForm',
+    'change_password': 'allauth.account.forms.ChangePasswordForm',
+    'confirm_login_code': 'allauth.account.forms.ConfirmLoginCodeForm',
+    'login': 'allauth.account.forms.LoginForm',
+    'request_login_code': 'allauth.account.forms.RequestLoginCodeForm',
+    'reset_password': 'allauth.account.forms.ResetPasswordForm',
+    'reset_password_from_key': 'allauth.account.forms.ResetPasswordKeyForm',
+    'set_password': 'allauth.account.forms.SetPasswordForm',
+    'signup': 'allauth.account.forms.SignupForm',
+    'user_token': 'allauth.account.forms.UserTokenForm',
+}
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': 'SOME_ID',
+            'secret': 'SOME_SECRET',
+            'key': ''
+        },
+    }
+}
+SOCIALACCOUNT_LOGIN_ON_GET=True
+LOGIN_REDIRECT_URL='index'
+AUTHENTICATION_BACKENDS = (
+    'allauth.account.auth_backends.AuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+# Django allauth config
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
+ACCOUNT_LOGIN_METHODS = {'email'}
+
+ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
+ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_EMAIL_SUBJECT_PREFIX = ''
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
+ACCOUNT_UNIQUE_EMAIL = True
+DEFAULT_FROM_EMAIL = 'admin@gmail.com'
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
