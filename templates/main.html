@@ -1,33 +1,39 @@
 <!DOCTYPE html>
 {% load static %}
+{% load i18n %}
 <html>
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>PcBuild</title>
-        <meta name="description" content="The PC building website">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{% static 'styles.css' %}">
+        <meta name="description" content="">
+        <meta name="generator" content="Hugo 0.118.2">
+        <title>
+            {% block head_title %}{% endblock %}
+        </title>
         
-        {% block head %}
-        
-        
-        {% endblock head %}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+              rel="stylesheet"
+              integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+              crossorigin="anonymous">
+
+        {% block head %}{% endblock head %}
     </head>
     <body>
         {% include 'header.html' %}
 
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-            
-        <div class="page-content">
-            {% block content %}{% endblock content %}
+        <div class="bg-body-secondary d-flex flex-column justify-content-center align-items-center h-auto min-vh-100">
+            {% block body %}
+
+                {% block content %}{% endblock content %}
+
+            {% endblock body %}
         </div>
+
+        {% block extra_body %}{% endblock extra_body %}
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+                crossorigin="anonymous"></script>
         {% comment %} <script src="" async defer></script> {% endcomment %}
     </body>
 </html>

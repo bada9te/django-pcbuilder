@@ -1,0 +1,13 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+    <p class="text-center">Welcome, {{ user }}!</p>
+
+    <div class="d-flex flex-column justify-content-center align-items-center">
+        <a href="{%url 'account_email'%}">Open account settings</a>
+
+        <a href="{%url 'logout'%}">Logout</a>
+    </div>
+{% endblock content %}

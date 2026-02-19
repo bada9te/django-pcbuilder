@@ -16,7 +16,7 @@ def index(request):
 
     return render(request, 'builder/index.html', context)
 
-@login_required(login_url='sign-in')
+@login_required(login_url='account_login')
 def setup(request):
     # handle post (save user's pc build)
     if request.method == 'POST':
@@ -35,6 +35,14 @@ def setup(request):
     return render(request, 'builder/setup.html', context)
 
 
+@login_required(login_url='account_login')
+def profile(request):
+    context = {}
+    return render(request, 'builder/profile.html', context)
+
+
+
+
 def login_user(request):
     if request.user is not None and request.user.is_authenticated:
         return redirect('index')
@@ -46,7 +54,7 @@ def login_user(request):
         user = User.objects.filter(email=email).first()
         if user is None:
             messages.error(request, 'User with this email does not exist')
-            return redirect('sign-in')
+            return redirect('account_login')
 
         user = authenticate(request, email=email, password=password)
 
@@ -55,7 +63,7 @@ def login_user(request):
             return redirect('index')
         else:
             messages.error(request, 'Invalid email or password')
-            return redirect('sign-in')
+            return redirect('account_login')
 
     # process GET request
     form = UserLoginForm()

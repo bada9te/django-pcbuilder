@@ -28,6 +28,14 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+USE_I18N = True
+LANGUAGE_CODE = "en"
+LANGUAGES = [
+    ('en', 'English'),
+    ('fr', 'French'),
+]
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -47,6 +55,10 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.usersessions',
+
+    # addons
+    'django.contrib.humanize',
+    'widget_tweaks'
 ]
 
 MIDDLEWARE = [
@@ -180,8 +192,8 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         'APP': {
-            'client_id': 'SOME_ID',
-            'secret': 'SOME_SECRET',
+            'client_id': '',
+            'secret': '',
             'key': ''
         },
     }

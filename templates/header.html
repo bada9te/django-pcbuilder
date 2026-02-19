@@ -1,9 +1,21 @@
-<header>
-    <h1>PcBuild</h1>
-    
-    {% if request.user.is_authenticated %}
-        <a class="sign-in-button" href="{% url 'logout' %}">{{ request.user }}</a>
-    {% else %}
-        <a class="sign-in-button" href="{% url 'sign-in' %}">Sign in</a>
-    {% endif %}
-</header>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'index' %}">PcBuild</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'setup' %}">Make a build</a>
+        </li>
+      </ul>
+      
+      {% if request.user.is_authenticated %}
+        <a class="btn btn-outline-success" href="{% url 'profile' %}">{{ request.user }}</a>
+      {% else %}
+        <a class="btn btn-outline-success" href="{% url 'account_login' %}">Login</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
